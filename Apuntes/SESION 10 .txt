@@ -1,0 +1,176 @@
+Sub Macroconatajo()
+' Macroconatajo Macro
+' Acceso directo: CTRL+j
+    Range("F5").Select
+End Sub
+
+Sub método_OnKey()
+    'Application.OnKey "{DEL}", "Macroconatajo"
+    Application.OnKey "{DEL}"
+    
+End Sub
+
+Sub pruebaif()
+    If Range("B1") > 10 Then
+        Range("B1").Offset(0, 1).Value = "Aprobado"
+        Range("B1", Range("B1").Offset(0, 1)).Font.Color = RGB(0, 0, 255)
+    Else
+        Range("B1", Range("B1").Offset(0, 1)).Font.Color = RGB(255, 0, 0)
+    End If
+    
+    
+End Sub
+Sub pruebaif2()
+    Dim selectedRange As Range
+    Set selectedRange = Selection
+    
+    If selectedRange.Value > 10 Then
+        With selectedRange
+            .Offset(0, 1).Value = "Aprobado"
+            .Font.Color = RGB(0, 0, 255)
+            .Offset(0, 1).Font.Color = RGB(0, 0, 255)
+        End With
+    Else
+        With selectedRange
+            .Offset(0, 1).Value = "Desaprobado"
+            .Font.Color = RGB(255, 0, 0)
+            .Offset(0, 1).Font.Color = RGB(255, 0, 0)
+        End With
+    End If
+End Sub
+
+Sub condicional1()
+    
+    Dim número_ingresado As Integer
+    Range("A1", "A2").ClearContents
+    número_ingresado = InputBox("Ingrese número")
+    
+    If número_ingresado > 50 Then
+        Range("A1").Value = número_ingresado
+        Range("A2").Value = "Aprobado"
+        Range("A1", "A2").Font.Color = RGB(0, 0, 255)
+    End If
+    
+End Sub
+
+Sub condicional2()
+    
+    Dim número_ingresado As Integer
+    
+    Range("A1", "A2").ClearContents
+    número_ingresado = InputBox("Ingrese número")
+    Range("A1").Value = número_ingresado
+    
+    If número_ingresado > 50 Then
+        Range("A2").Value = "Aprobado"
+        Range("A1", "A2").Font.Color = RGB(0, 0, 255)
+    Else
+        Range("A2").Value = "Desaprobado"
+        Range("A1", "A2").Font.Color = RGB(255, 0, 0)
+    End If
+    
+End Sub
+
+Sub condicional3()
+    
+    Dim número_ingresado As Integer
+    
+    Range("A1", "A2").ClearContents
+    número_ingresado = InputBox("Ingrese número")
+    Range("A1").Value = número_ingresado
+    
+    If número_ingresado >= 80 Then
+        Range("A2").Value = "Excelente"
+        Range("A1", "A2").Font.Color = RGB(0, 0, 255)
+    Else
+        If número_ingresado > 50 Then
+            Range("A2").Value = "Aprobado"
+            Range("A1", "A2").Font.Color = RGB(0, 255, 0)
+        Else
+            Range("A2").Value = "Desaprobado"
+            Range("A1", "A2").Font.Color = RGB(255, 0, 0)
+        End If
+    End If
+    
+End Sub
+
+Sub condicional4()
+    Dim número_ingresado As Integer
+    Range("A1", "A2").ClearContents
+    número_ingresado = InputBox("Ingrese número")
+    
+    If número_ingresado >= 0 And número_ingresado <= 100 Then
+        Range("A1").Value = número_ingresado
+        If número_ingresado >= 80 Then
+            Range("A2").Value = "Excelente"
+            Range("A1", "A2").Font.Color = RGB(0, 0, 255)
+        Else
+            If número_ingresado > 50 Then
+                Range("A2").Value = "Aprobado"
+                Range("A1", "A2").Font.Color = RGB(0, 255, 0)
+            Else
+                Range("A2").Value = "Desaprobado"
+                Range("A1", "A2").Font.Color = RGB(255, 0, 0)
+            End If
+        End If
+    Else
+        MsgBox "Ingrese un número entre 0 y 100", 0, "Número incorrecto"
+        Call condicional4
+    End If
+    
+End Sub
+
+Sub condicional5()
+    Dim número_ingresado As Integer
+    Range("A1", "A2").ClearContents
+    número_ingresado = InputBox("Ingrese número")
+    
+    If número_ingresado < 0 Or número_ingresado > 100 Then
+        MsgBox "Ingrese un número entre 0 y 100", 0, "Número incorrecto"
+        Call condicional5
+    Else
+        Range("A1").Value = número_ingresado
+        If número_ingresado >= 80 Then
+            Range("A2").Value = "Excelente"
+            Range("A1", "A2").Font.Color = RGB(0, 0, 255)
+        Else
+            If número_ingresado > 50 Then
+                Range("A2").Value = "Aprobado"
+                Range("A1", "A2").Font.Color = RGB(0, 255, 0)
+            Else
+                Range("A2").Value = "Desaprobado"
+                Range("A1", "A2").Font.Color = RGB(255, 0, 0)
+            End If
+        End If
+    End If
+    
+End Sub
+
+Sub condicional6()
+    Dim número_ingresado As Integer
+    Range("A1", "A2").ClearContents
+    número_ingresado = InputBox("Ingrese número")
+    Range("A1").Value = número_ingresado
+    
+    Select Case número_ingresado
+        Case Is < 0, Is > 100
+            Range("A1").ClearContents
+            MsgBox "Ingrese un número entre 0 y 100", 0, "Número incorrecto"
+            Call condicional6
+        Case Is >= 80
+            Range("A2").Value = "Excelente"
+            Range("A1", "A2").Font.Color = RGB(0, 0, 255)
+        Case Is > 50
+            Range("A2").Value = "Aprobado"
+            Range("A1", "A2").Font.Color = RGB(0, 255, 0)
+        Case Is <= 50
+            Range("A2").Value = "Desaprobado"
+            Range("A1", "A2").Font.Color = RGB(255, 0, 0)
+    End Select
+    
+End Sub
+
+
+
+
+

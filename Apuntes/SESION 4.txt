@@ -1,0 +1,98 @@
+'-------------------------------------------------------------
+Sub ejemplo1()
+    
+    Range("A1").Value = "Bienvenido"
+    
+End Sub
+
+Sub ejemplo2()
+    
+    '1. [Declaración]
+    Dim Texto As String
+    
+    '2. Asignación
+    Texto = "Bienvenido"
+    
+    '3. Utilización
+    Range("A1").Value = Texto
+    
+End Sub
+
+'-------------------------------------------------------------------
+
+Sub ejemplo3()
+    
+    '1. [Declaración]
+    Dim Texto As String
+    
+    '2. Asignación
+    Texto = InputBox("Ingrese un texto para la celda A1", "Ingresar texto")
+    
+    '3. Utilización
+    Range("A1").Value = Texto
+    
+End Sub
+
+'-------------------------------------------------------------------
+Sub ejemplo4()
+    
+    '1. [Declaración]
+    Dim Celda As String
+    Dim Texto As String
+    
+    '2. Asignación
+    Celda = InputBox("¿En qué celda desea ingresar el texto?", "Ingresar celda")
+    Texto = InputBox("Ingrese un texto para la celda " + Celda, "Ingresar texto")
+    
+    '3. Utilización
+    Range(Celda).Value = Texto
+    
+End Sub
+'-------------------------------------------------------------------
+
+Sub ejemplo_msgbox()
+    
+'    MsgBox "Hola, está en el curso de Macros", vbYesNo, "Bienvenido"
+'    MsgBox "Hola, está en el curso de Macros", 2, "Bienvenido"
+    MsgBox "Hola, está en el curso de Macros", 2 + 32, "Bienvenido"
+    
+    MsgBox "Hola, está en el curso de Macros", vbAbortRetryIgnore + vbQuestion, "Bienvenido"
+    
+    'MsgBox InputBox("Ingrese mensaje") & "123"
+    
+    
+    
+End Sub
+
+'-------------------------------------------------------------------
+
+Sub fórmulas_mod2()
+    
+    Sheets("Planilla").Select
+    '1. [Declaración]
+    Dim nro_filas As Integer
+    '2. Asignación
+    nro_filas = Range("A1").End(xlDown).Row
+    'nro_filas = Cells.Rows.End(xlUp).Row
+    '3. Utilización
+    Range("K2:K" & nro_filas).FormulaR1C1 = "=+IF(RC[-3]>0,10%*930,0)"
+    Range("L2:L" & nro_filas).FormulaR1C1 = "=+RC[-2]+RC[-1]"
+    Range("M2:M" & nro_filas).FormulaR1C1 = "=+VLOOKUP(RC[-4],Pensión!R4C1:R7C5,5,0)*RC[-1]"
+    Range("N2:N" & nro_filas).FormulaR1C1 = "=+RC[-2]-RC[-1]"
+    
+End Sub
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

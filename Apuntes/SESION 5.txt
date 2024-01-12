@@ -1,0 +1,124 @@
+OPTION  EXPLIT 
+Es una instruccion para que la declaracion de variables sea obligatoria
+
+HABILITAR OPTION  EXPLIT 
+HERRAMIENTAS - OPCIONES -REQUERIR DECLARACION DE VARIABLES ✓ 
+
+VARIABLES DE PROCEDIMIENTO : SOLO ESTAN DISPONEIBLES EN LOS PROCEDIMIENTOS DONDE FUERON DECLARADAS
+VARIABLES DE MODULO : CUALQUIER PROCEDIMIENTO PUEDE USAR ESTA VARIABLE DE UN MODULO ESPECIFICO   
+Dim Texto As String  Antes de Sub ...() 
+
+VARIABLES DE PROYECTO O PUBLICAS : CUALQUIER PROCEDIMIENTO PUEDE USAR ESTA VARIABLE DE CUALQUIER MODULO.
+Public Texto As String
+CONTANTES  :VALOR QUE NO CAMBIA
+CONST constante= valor 
+CONST constante AS tipo = valor
+Const nombre_curso="Macros en Excel"
+Const tipo_cambio As Single =3.15
+
+variables de procedimientos : declarar las variables dentro de  : Dim Edad As Integer 
+variables publicas : declarar las variables al inicio del modulo  : Public Edad As Integer 
+puede ser utilizada para cualquier modulo 
+
+### OBJETOS 
+
+Variable Objeto:Sirve para hacer refencia  a un objeto:archivo , tabla dinamica 
+Sub ejemplo_var_objeto()
+    Dim rango_datos As Range
+    Set rango_datos = Range("B7", "E25")
+    With rango_datos
+        .Value = "Macros"
+        .Font.Bold = True
+        .Font.Italic = True
+        .Font.Size = 16
+        .Font.Name = "Lucida Sans"
+    End With
+End Sub
+
+## Objeto Range 
+
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------
+
+
+Set Var_objeto=Objeto
+--------------------------------------------------------------------------------
+Option Explicit
+
+'Dim Texto As String
+'Public Texto As String
+Sub ejemplo1()
+    Range("A1").Value = "Bienvenido"
+End Sub
+------------------------------------------------------------------------------
+Sub ejemplo2()
+    '1. [Declaración]
+    Dim Texto As String 
+    '2. Asignación
+    Texto = "Bienvenido"
+    '3. Utilización
+    Range("A1").Value = Texto
+End Sub
+------------------------------------------------------------------------------
+Sub ejemplo2()
+    Dim Texto As String 
+    Texto = "Bienvenido"
+    Range("A1").Value = Texto
+End Sub
+--------------------------------------------------------------------------------
+
+Sub ejemplo3()
+    'Dim Texto As String
+    Texto = InputBox("Ingrese un texto para la celda A1", "Ingresar texto")
+    Range("A1").Value = Texto
+End Sub
+
+--------------------------------------------------------------------------------
+Sub ejemplo4()
+    '1. [Declaración]
+    Dim Celda As String
+    'Dim Texto As String
+    '2. Asignación
+    Celda = InputBox("¿En qué celda desea ingresar el texto?", "Ingresar celda")
+    Texto = InputBox("Ingrese un texto para la celda " + Celda, "Ingresar texto")
+    '3. Utilización
+    Range(Celda).Value = Texto
+End Sub
+--------------------------------------------------------------------------------
+Sub ejemplo4()
+    Dim Celda As String
+    Celda = InputBox("¿En qué celda desea ingresar el texto?", "Ingresar celda")
+    Texto = InputBox("Ingrese un texto para la celda " + Celda, "Ingresar texto")
+    Range(Celda).Value = Texto
+End Sub
+--------------------------------------------------------------------------------
+## MODULO PARA OBJETOS 
+
+Sub objeto_range()
+    'Range("B7").Value = "Macros"
+    Range("C3","E8").Value = "Macros"
+End Sub
+
+------------------------------------------------------------
+Sub objeto_range()
+    'Range("B7").Value = "Macros"
+    Range("C3","E8").Value = "Macros"
+End Sub
+
+
+
+
+
+
+

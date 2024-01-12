@@ -1,0 +1,109 @@
+'Sub promedio_columnas()
+''    Range("C1").Select
+'    Selection.End(xlDown).Select
+'    ActiveCell.Offset(1, 0).Range("A1").Select
+'    Selection.FormulaR1C1 = "=+AVERAGE(R2C:R[-1]C)"
+'    Range("C1").Select
+'    Selection.End(xlToRight).Select
+'    Selection.End(xlDown).Select
+'    ActiveCell.Offset(1, 0).Range("A1").Select
+'    Range(Selection, Selection.End(xlToLeft)).Select
+'    Selection.FormulaR1C1 = "=+AVERAGE(R2C:R[-1]C)"
+'
+'End Sub
+'
+'Sub promedio_columnas_mod()
+'    Range("C1").End(xlDown).Offset(1, 0).FormulaR1C1 = "=+AVERAGE(R2C:R[-1]C)"
+'    'Range("C1").End(xlToRight).End(xlDown).Offset(1, 0).Select
+'    'Range(Range("C1").End(xlToRight).End(xlDown).Offset(1, 0), Range("C1").End(xlToRight).End(xlDown).Offset(1, 0).End(xlToLeft)).Select
+'    Range(Range("C1").End(xlToRight).End(xlDown).Offset(1, 0), Range("C1").End(xlToRight).End(xlDown).Offset(1, 0).End(xlToLeft)).FormulaR1C1 = "=+AVERAGE(R2C:R[-1]C)"
+'
+'End Sub
+'
+'Sub range_variable()
+''    Dim mi_rango As String
+''    mi_rango = Range("A1").Value
+'    Range("celda_inicial").End(xlDown).Offset(1, 0).FormulaR1C1 = "=+AVERAGE(R2C:R[-1]C)"
+'End Sub
+'
+'Sub objeto_worksheets()
+'    'Worksheets.Add
+''    'Worksheets.Add.Name = "Excel"
+'    'Worksheets.Add after:=Worksheets("Tarea")
+'    'Worksheets.Add before:=Worksheets("Excel")
+'    'Worksheets.Add(after:=Worksheets("Tarea")).Name = "Macros"
+'    'Worksheets.Add Count:=5
+'    'Worksheets("Tarea").Copy
+'    'Worksheets("Tarea").Copy after:=Worksheets("2023")
+'    Hoja8.Copy
+'End Sub
+'
+'Sub objeto_workbooks()
+'
+'    'Workbooks.Add
+'
+'    'Workbooks.Add (xlWBATChart)
+'
+'    ruta = "D:\Edúcate Perú\Programación en Excel Jul 2023\Excel\Sesión 5\"
+'    nombre_archivo = "Automatización de procesos Sesión 5"
+'    'extensión = ".xlsm"
+'
+'    Workbooks.Open ruta & nombre_archivo '& extensión
+'
+'
+'End Sub
+
+Sub abrir_archivos_sbs()
+    ruta_origen = "https://intranet2.sbs.gob.pe/estadistica/financiera/2021/Noviembre/"
+    nombre_archivo = "B-2315-no2021"
+    extensión = ".XLS"
+    Workbooks.Open ruta_origen & nombre_archivo & extensión
+    ruta_destino = "D:\CAPACITACIONES\2023\EXCEL\MACROS Y VBA\Clase 9"
+    ActiveWorkbook.SaveAs ruta_destino & nombre_archivo & ".xlsx", xlOpenXMLWorkbook  
+End Sub
+
+Sub abrir()
+    Workbooks.Open "https://www.inei.gob.pe/media/MenuRecursivo/indices_tematicos/1_oyd_kte_27.xlsx"
+End Sub
+
+Sub cerrar_todos()
+    Workbooks.Close
+End Sub
+
+
+Sub objeto_Application()
+    
+    'Application.Caption = "Rubén Tarazona"
+    'Application.Caption = ""
+    'Application.UserName = "Rubén Tarazona Quispe"
+    'Application.StatusBar = "Curso de Macros"
+    'Application.StatusBar = ""
+    'Application.DisplayFormulaBar = False
+    'Application.DisplayFormulaBar = True
+    'Application.StandardFont = "Lucida Sans"
+    'Application.StandardFontSize = 16
+    'Application.SheetsInNewWorkbook = 1
+    'Application.DisplayFullScreen = True
+    'Application.ReferenceStyle = xlR1C1
+    Application.ReferenceStyle = xlA1
+End Sub
+
+Sub cambiar_usuario()
+    ActiveWorkbook.SaveAs Filename:= _
+        "D:\Edúcate Perú\Programación en Excel Jul 2023\Excel\Sesión 9\Automatización de procesos Sesión 9.xlsm" _
+        , FileFormat:=xlOpenXMLWorkbookMacroEnabled, CreateBackup:=False
+End Sub
+
+
+'Ejecuta una macro en tiempo determinado
+Sub método_OnTime()
+    Application.OnTime Now + TimeValue("00:00:5"), "promedios"
+End Sub
+
+
+'Sub convertir_valores()
+'    Range("L2:L13").Copy
+'    Range("L2:L13").PasteSpecial Paste:=xlPasteValues
+'    Application.CutCopyMode = False
+'
+'End Sub

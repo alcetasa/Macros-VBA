@@ -1,0 +1,31 @@
+"Principales métodos
+
+Range ("A1").Activate
+Range ("Al").Select
+Range ("Al").AddComment "Celda inicial"
+
+Range ("A1").Clear
+Range ("Al").ClearComments
+Range ("Al").ClearContents
+Range ("A1").ClearFormats
+Range ("Al").Copy Range ("A2")
+Range ("A1").Delete x1ShiftToLeft
+Range ("A1").Delete x1ShiftUp
+
+Range ("A1").EntireColumn.AutoFit
+Range ("A1").EntireColumn.Delete
+Range ("A1").EntireColumn.Insert
+
+Range ("A1").PasteSpecial XlPasteAll
+Range ("A1").PasteSpecial XxlPasteFormats
+Range ("A1").PasteSpecial xlPasteFormulas 
+Range ("A1").PasteSpecial xlPasteFormulasAndNumbersFormats
+Range ("A1").PasteSpecial XlPasteValues
+Range ("A1").PasteSpecial XlPasteValues
+Range ("A1").PasteSpecial X1PasteValuesAndNumberFormats
+
+
+
+
+
+
