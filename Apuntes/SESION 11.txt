@@ -1,1 +1,213 @@
-GVULGU
+ 
+'DESCARGA DE UN ARCHIVO DE INTERNET Y GUARDARLO EN VARIAS CARPETAS POR MESES 
+
+'https://intranet2.sbs.gob.pe/estadistica/financiera/2022/Enero/B-2315-en2022.XLS
+    ruta = "D:\CAPACITACIONES\2023\EXCEL\MACROS Y VBA\MACROS & VBA documentos\Clase 11\Practicas"
+    
+    meses_sbs = Array("en", "fe", "ma", "ab", "my", "jn", "jl", "ag", "se", "oc", "no", "di")
+    meses = Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Setiembre", "Octubre", "Noviembre", "Diciembre")
+    For i = 1 To 12
+    mes_letras = meses(i - 1)
+    mes_abreviado = meses_sbs(i - 1)
+    
+    ruta_sbs = "https://intranet2.sbs.gob.pe/estadistica/financiera/2022/" & mes_letras & "/"
+    nombre_archivo = "B-2315-" & mes_abreviado & "2022"
+    extensión = ".XLS"
+
+    Workbooks.Open ruta_sbs & nombre_archivo & extensión
+    
+    
+    ActiveWorkbook.SaveAs ruta & nombre_archivo & ".xlsx", xlOpenXMLWorkbook
+    ActiveWorkbook.Close
+    Next i
+
+    Application.ScreenUpdating = True
+    
+End Sub
+
+
+
+'GUARDAR EN VARIAS CARPETAS SEGUN POR  CADA MES  Y AÑOS 
+Sub descarga_archivos_sbs3()
+
+    Application.ScreenUpdating = False
+    'https://intranet2.sbs.gob.pe/estadistica/financiera/2022/Enero/B-2315-en2022.XLS
+    ruta = "D:\CAPACITACIONES\2023\EXCEL\MACROS Y VBA\MACROS & VBA documentos\Clase 11\Practicas"
+    
+    meses_sbs = Array("en", "fe", "ma", "ab", "my", "jn", "jl", "ag", "se", "oc", "no", "di")
+    meses = Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Setiembre", "Octubre", "Noviembre", "Diciembre")
+    
+    For j = 2018 To 2022
+    
+     If Dir(ruta & j & "\", vbDirectory) = "" Then
+            MkDir ruta & j     'Crea la carpeta "Año" en la ruta especificada
+        End If
+        
+        
+        For i = 1 To 12
+        mes_letras = meses(i - 1)
+        mes_abreviado = meses_sbs(i - 1)
+        
+        ruta_sbs = "https://intranet2.sbs.gob.pe/estadistica/financiera/" & j & "/" & mes_letras & "/"
+        nombre_archivo = "B-2315-" & mes_abreviado & j
+        extensión = ".XLS"
+    
+        Workbooks.Open ruta_sbs & nombre_archivo & extensión
+        
+        ActiveWorkbook.SaveAs ruta & j & "\" & nombre_archivo & ".xlsx", xlOpenXMLWorkbook
+        ActiveWorkbook.Close
+        Next i
+        
+    Next j
+
+    Application.ScreenUpdating = True
+    
+End Sub
+
+
+'COLOREAR LA FILA QUE CUMPLA UNA CONDICION 
+
+Sub Data_Créditos_a()
+    nro_filas = Range("A1").End(xlDown).Row
+    For i = 2 To nro_filas
+        fecha_vencimiento = Cells(i, "N").Value
+        If fecha_vencimiento <= CDate("31/12/2016") Then
+            Range(Cells(i, 1), Cells(i, "Q")).Interior.Color = RGB(255, 0, 0)
+            Range(Cells(i, 1), Cells(i, "Q")).Font.Color = RGB(255, 255, 255)
+        End If
+    Next i
+    
+End Sub
+
+
+
+'COLOREAR LA FILA QUE CUMPLA UNA CONDICION CON IF Y ELSE
+
+Sub Data_Créditos_a2()
+    
+    nro_filas = Range("A1").End(xlDown).Row
+    For i = 2 To nro_filas
+        fecha_vencimiento = Cells(i, "N").Value
+        
+        If fecha_vencimiento <= CDate("31/12/2015") Then
+            Range(Cells(i, 1), Cells(i, "Q")).Interior.Color = RGB(255, 0, 0)
+            Range(Cells(i, 1), Cells(i, "Q")).Font.Color = RGB(255, 255, 255)
+        Else
+            If fecha_vencimiento <= CDate("31/12/2016") Then
+                Range(Cells(i, 1), Cells(i, "Q")).Interior.Color = RGB(0, 0, 255)
+                Range(Cells(i, 1), Cells(i, "Q")).Font.Color = RGB(255, 255, 255)
+            End If
+        End If
+    Next i
+    
+End Sub
+
+
+'COLOREAR VARIAS FILAS QUE CUMPLAN VARIAS CONDICIONES 
+Sub Data_Créditos_a3()
+    
+    nro_filas = Range("A1").End(xlDown).Row
+    
+    For i = 2 To nro_filas
+        fecha_vencimiento = Cells(i, "N").Value
+        If fecha_vencimiento <= CDate("31/12/2015") Then
+            Range(Cells(i, 1), Cells(i, "Q")).Interior.Color = RGB(255, 0, 0)
+            Range(Cells(i, 1), Cells(i, "Q")).Font.Color = RGB(255, 255, 255)
+        Else
+            If fecha_vencimiento <= CDate("31/12/2016") Then
+                Range(Cells(i, 1), Cells(i, "Q")).Interior.Color = RGB(0, 0, 255)
+                Range(Cells(i, 1), Cells(i, "Q")).Font.Color = RGB(255, 255, 255)
+            Else
+                If fecha_vencimiento <= CDate("31/12/2017") Then
+                    Range(Cells(i, 1), Cells(i, "Q")).Interior.Color = RGB(0, 255, 0)
+                    Range(Cells(i, 1), Cells(i, "Q")).Font.Color = RGB(255, 255, 255)
+                End If
+            End If
+        End If
+    Next i
+    
+End Sub
+
+
+'COLOREAR VARIAS FILAS SEGUN LA CODICION CON CASE IS 
+Sub Data_Créditos_a4()
+    
+    nro_filas = Range("A1").End(xlDown).Row
+    For i = 2 To nro_filas
+        fecha_vencimiento = Cells(i, "N").Value
+        
+        Select Case fecha_vencimiento
+        Case Is <= CDate("31/12/2015")
+            Range(Cells(i, 1), Cells(i, "Q")).Interior.Color = RGB(255, 0, 0)
+            Range(Cells(i, 1), Cells(i, "Q")).Font.Color = RGB(255, 255, 255)
+        Case Is <= CDate("31/12/2016")
+            Range(Cells(i, 1), Cells(i, "Q")).Interior.Color = RGB(0, 0, 255)
+            Range(Cells(i, 1), Cells(i, "Q")).Font.Color = RGB(255, 255, 255)
+        Case Is <= CDate("31/12/2017")
+            Range(Cells(i, 1), Cells(i, "Q")).Interior.Color = RGB(0, 255, 0)
+            Range(Cells(i, 1), Cells(i, "Q")).Font.Color = RGB(255, 255, 255)
+        End Select
+    Next i
+    
+End Sub
+
+
+'ELIMINAR LAS FILAS QUE CUMPLAN CIERTA CONDICION (OJO SIEMPRE ELIMINAR DESDE LA ULTIMA FILA HASTA LA PRIMERA)
+
+Sub Data_Créditos_b()
+    
+    nro_filas = Range("A1").End(xlDown).Row
+    For i = nro_filas To 2 Step -1
+        fecha_vencimiento = Cells(i, "N").Value
+        If fecha_vencimiento <= CDate("31/12/2015") Then
+            Cells(i, "N").EntireRow.Delete
+        End If
+    Next i
+    
+End Sub
+
+'Total filas inicial = 3865
+'Total filas final = 3251
+'Filas eliminadas = 614
+
+'Total filas final = 2942
+'Filas eliminadas = 923
+'Diferencia eliminadas = 309
+
+
+
+'CREAR UNA COLUMNAS APARTIR DE OTRA Y QUE LOS DATOS CUMPLAN CIERTA CONDICION
+
+Sub Data_Créditos_c()
+    
+    Range("F1").EntireColumn.Insert
+    Range("F1").Value = "NSE"
+    
+    nro_filas = Range("A1").End(xlDown).Row
+    For i = 2 To nro_filas
+        ingreso = Cells(i, 5).Value
+        
+        Select Case ingreso
+        Case Is <= 1300
+            nse = "E"
+        Case Is <= 2500
+            nse = "D"
+        Case Is <= 4000
+            nse = "C"
+        Case Is <= 7100
+            nse = "B"
+        Case Is > 7100
+            nse = "A"
+        End Select
+        
+        Cells(i, 6).Value = nse
+    Next i
+    
+End Sub
+
+
+
+
+
+
+
