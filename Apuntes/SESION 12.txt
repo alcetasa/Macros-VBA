@@ -1,0 +1,413 @@
+Apuntes Sesion 12
+Macros A:
+Data_Créditos_a: Colorea las filas cuya fecha de vencimiento sea menor o igual a 31/12/2016 con rojo y texto blanco.
+Data_Créditos_a2: Similar a la anterior, pero con dos condiciones diferentes para diferentes colores.
+Data_Créditos_a3: Colorea filas con diferentes colores según la fecha de vencimiento (rojo, azul o verde).
+Data_Créditos_a4: Utiliza Select Case para colorear filas según la fecha de vencimiento.
+Macro B:
+Data_Créditos_b: Elimina las filas cuya fecha de vencimiento sea menor o igual a 31/12/2015, eliminando desde la última fila hasta la segunda.
+Macro C:
+Data_Créditos_c: Inserta una nueva columna llamada "NSE" al lado derecho de la columna "INGRESO" y asigna valores según las condiciones especificadas.
+Macro D:
+Data_Créditos_d: Colorea filas cuyo PRODUCTO sea "HIPOTECARIO MI VIVIENDA" o NSE sea "E", y el SALDO REAL esté entre 50,000 y 100,500 u.m.
+Macros E y F:
+Data_Créditos_e: Crea hojas adicionales según los valores únicos en la columna "SEGMENTO" y traslada los datos de la hoja "Data" a las nuevas hojas.
+Data_Créditos_f: Similar a la anterior, pero guarda cada hoja como un archivo independiente en una ruta específica.
+Macros de Tasas Mensuales:
+tasas_mensuales: Abre archivos correspondientes a los años 2001 a 2006 y traslada tasas activas mensuales en moneda nacional y extranjera a un archivo llamado "Tasas_completado.xlsx".
+tasas_mensuales2: Similar a la anterior, pero calcula el promedio de tasas mensuales antes de trasladarlas.
+
+
+
+'A. Elabore una macro que modifique el formato de todos aquellos registros cuya fecha de vencimiento es menor o igual al año 2016.
+'COLOREAR LA FILA QUE CUMPLA UNA CONDICION 
+
+Sub Data_Créditos_a()
+    nro_filas = Range("A1").End(xlDown).Row
+    For i = 2 To nro_filas
+        fecha_vencimiento = Cells(i, "N").Value
+        If fecha_vencimiento <= CDate("31/12/2016") Then
+            Range(Cells(i, 1), Cells(i, "Q")).Interior.Color = RGB(255, 0, 0)
+            Range(Cells(i, 1), Cells(i, "Q")).Font.Color = RGB(255, 255, 255)
+        End If
+    Next i
+    
+End Sub
+
+
+Sub Data_Créditos_a2()
+    
+    nro_filas = Range("A1").End(xlDown).Row
+    For i = 2 To nro_filas
+        fecha_vencimiento = Cells(i, "N").Value
+        
+        If fecha_vencimiento <= CDate("31/12/2015") Then
+            Range(Cells(i, 1), Cells(i, "Q")).Interior.Color = RGB(255, 0, 0)
+            Range(Cells(i, 1), Cells(i, "Q")).Font.Color = RGB(255, 255, 255)
+        Else
+            If fecha_vencimiento <= CDate("31/12/2016") Then
+                Range(Cells(i, 1), Cells(i, "Q")).Interior.Color = RGB(0, 0, 255)
+                Range(Cells(i, 1), Cells(i, "Q")).Font.Color = RGB(255, 255, 255)
+            End If
+        End If
+    Next i
+    
+End Sub
+
+
+'COLOREAR VARIAS FILAS QUE CUMPLAN VARIAS CONDICIONES 
+Sub Data_Créditos_a3()
+    
+    nro_filas = Range("A1").End(xlDown).Row
+    
+    For i = 2 To nro_filas
+        fecha_vencimiento = Cells(i, "N").Value
+        If fecha_vencimiento <= CDate("31/12/2015") Then
+            Range(Cells(i, 1), Cells(i, "Q")).Interior.Color = RGB(255, 0, 0)
+            Range(Cells(i, 1), Cells(i, "Q")).Font.Color = RGB(255, 255, 255)
+        Else
+            If fecha_vencimiento <= CDate("31/12/2016") Then
+                Range(Cells(i, 1), Cells(i, "Q")).Interior.Color = RGB(0, 0, 255)
+                Range(Cells(i, 1), Cells(i, "Q")).Font.Color = RGB(255, 255, 255)
+            Else
+                If fecha_vencimiento <= CDate("31/12/2017") Then
+                    Range(Cells(i, 1), Cells(i, "Q")).Interior.Color = RGB(0, 255, 0)
+                    Range(Cells(i, 1), Cells(i, "Q")).Font.Color = RGB(255, 255, 255)
+                End If
+            End If
+        End If
+    Next i
+    
+End Sub
+
+
+'COLOREAR VARIAS FILAS SEGUN LA CODICION CON CASE IS 
+Sub Data_Créditos_a4()
+    
+    nro_filas = Range("A1").End(xlDown).Row
+    For i = 2 To nro_filas
+        fecha_vencimiento = Cells(i, "N").Value
+        
+        Select Case fecha_vencimiento
+        Case Is <= CDate("31/12/2015")
+            Range(Cells(i, 1), Cells(i, "Q")).Interior.Color = RGB(255, 0, 0)
+            Range(Cells(i, 1), Cells(i, "Q")).Font.Color = RGB(255, 255, 255)
+        Case Is <= CDate("31/12/2016")
+            Range(Cells(i, 1), Cells(i, "Q")).Interior.Color = RGB(0, 0, 255)
+            Range(Cells(i, 1), Cells(i, "Q")).Font.Color = RGB(255, 255, 255)
+        Case Is <= CDate("31/12/2017")
+            Range(Cells(i, 1), Cells(i, "Q")).Interior.Color = RGB(0, 255, 0)
+            Range(Cells(i, 1), Cells(i, "Q")).Font.Color = RGB(255, 255, 255)
+        End Select
+    Next i
+    
+End Sub
+
+
+
+
+' B Elabore una macro que elimine todos aquellos registros cuya fecha de vencimiento es menor o igual al año 2015.
+'COLOREAR LA FILA QUE CUMPLA UNA CONDICION CON IF Y ELSE
+
+'ELIMINAR LAS FILAS QUE CUMPLAN CIERTA CONDICION (OJO SIEMPRE ELIMINAR DESDE LA ULTIMA FILA HASTA LA PRIMERA)
+
+Sub Data_Créditos_b()
+    
+    nro_filas = Range("A1").End(xlDown).Row
+    For i = nro_filas To 2 Step -1
+        fecha_vencimiento = Cells(i, "N").Value
+        If fecha_vencimiento <= CDate("31/12/2015") Then
+            Cells(i, "N").EntireRow.Delete
+        End If
+    Next i
+    
+End Sub
+
+'Total filas inicial = 3865
+'Total filas final = 3251
+'Filas eliminadas = 614
+
+'Total filas final = 2942
+'Filas eliminadas = 923
+'Diferencia eliminadas = 309
+
+
+'c. Elabore una macro que inserte un nuevo campo al lado derecho del campo “INGRESO”, el nuevo campo debe llamarse “NSE” y debe ser completado de la siguiente manera:
+'i. Si el ingreso es menor o igual a 1,300, NSE debe ser igual a “E”.
+'ii. Si el ingreso es menor o igual a 2,500, NSE debe ser igual a “D”.
+'iii. Si el ingreso es menor o igual a 4,000, NSE debe ser igual a “C”.
+'iv. Si el ingreso es menor o igual a 7,100, NSE debe ser igual a “B”.
+'v. Si el ingreso es mayor a 7,100, NSE debe ser igual a “A”.
+
+
+'C. CREAR UNA COLUMNAS APARTIR DE OTRA Y QUE LOS DATOS CUMPLAN CIERTA CONDICION
+
+Sub Data_Créditos_c()
+    
+    Range("F1").EntireColumn.Insert
+    Range("F1").Value = "NSE"
+    
+    nro_filas = Range("A1").End(xlDown).Row
+    For i = 2 To nro_filas
+        ingreso = Cells(i, 5).Value
+        
+        Select Case ingreso
+        Case Is <= 1300
+            nse = "E"
+        Case Is <= 2500
+            nse = "D"
+        Case Is <= 4000
+            nse = "C"
+        Case Is <= 7100
+            nse = "B"
+        Case Is > 7100
+            nse = "A"
+        End Select
+        
+        Cells(i, 6).Value = nse
+    Next i
+    
+End Sub
+
+
+
+
+
+'D. Elabore una macro que modifique el formato de los registros cuyo PRODUCTO es “HIPOTECARIO MI VIVIENDA” o
+'NSE “E”, y cuyo SALDO REAL sea mayor a 50,000 u.m. pero menor o igual a 100,500 u.m.
+
+
+Sub Data_Créditos_d()
+            
+    nro_Filas = Range("A1").End(xlDown).Row
+    For i = 2 To nro_Filas
+        producto = Cells(i, "P").Value
+        nse = Cells(i, "F").Value
+        saldo_real = Cells(i, "H").Value
+        If (producto = "HIPOTECARIO MI VIVIENDA" Or nse = "E") _
+            And (saldo_real > 50000 And saldo_real <= 100500) Then   '756
+            Range(Cells(i, 1), Cells(i, "R")).Interior.Color = RGB(255, 0, 0)
+            Range(Cells(i, 1), Cells(i, "R")).Font.Color = RGB(255, 255, 255)
+        End If
+    Next i
+    
+End Sub
+
+
+Sub pruebas_d1()
+            
+    nro_Filas = Range("A1").End(xlDown).Row
+    For i = 2 To nro_Filas
+        producto = Cells(i, "P").Value
+        If producto = "HIPOTECARIO MI VIVIENDA" Then    '2026
+            Range(Cells(i, 1), Cells(i, "R")).Interior.Color = RGB(255, 0, 0)
+            Range(Cells(i, 1), Cells(i, "R")).Font.Color = RGB(255, 255, 255)
+        End If
+    Next i
+    
+End Sub
+
+Sub pruebas_d2()
+            
+    nro_Filas = Range("A1").End(xlDown).Row
+    For i = 2 To nro_Filas
+        nse = Cells(i, "F").Value
+        If nse = "E" Then   '839
+            Range(Cells(i, 1), Cells(i, "R")).Interior.Color = RGB(255, 0, 0)
+            Range(Cells(i, 1), Cells(i, "R")).Font.Color = RGB(255, 255, 255)
+        End If
+    Next i
+    
+End Sub
+
+Sub pruebas_d3()
+            
+    nro_Filas = Range("A1").End(xlDown).Row
+    For i = 2 To nro_Filas
+        producto = Cells(i, "P").Value
+        nse = Cells(i, "F").Value
+        If producto = "HIPOTECARIO MI VIVIENDA" And nse = "E" Then   '373
+            Range(Cells(i, 1), Cells(i, "R")).Interior.Color = RGB(255, 0, 0)
+            Range(Cells(i, 1), Cells(i, "R")).Font.Color = RGB(255, 255, 255)
+        End If
+    Next i
+    
+End Sub
+
+Sub pruebas_d4()
+            
+    nro_Filas = Range("A1").End(xlDown).Row
+    For i = 2 To nro_Filas
+        saldo_real = Cells(i, "H").Value
+        If saldo_real > 50000 And saldo_real <= 100500 Then '1072
+            Range(Cells(i, 1), Cells(i, "R")).Interior.Color = RGB(255, 0, 0)
+            Range(Cells(i, 1), Cells(i, "R")).Font.Color = RGB(255, 255, 255)
+        End If
+    Next i
+    
+End Sub
+
+
+'E . Elabore una macro que traslade la información de la hoja “Data” a una nueva hoja en el mismo archivo, de acuerdo al valor del campo “SEGMENTO”.
+Sub Data_Créditos_e()
+    
+    nro_Filas = Sheets("Data").Range("A1").End(xlDown).Row
+    Sheets("Data").Range("R2", "R" & nro_Filas).Copy
+    Sheets.Add(, Sheets(Sheets.Count)).Name = "Segmentos"
+    ActiveSheet.Paste
+    ActiveSheet.Range("$A$1:$A$" & nro_Filas - 1).RemoveDuplicates Columns:=1, Header:=xlNo
+        
+    nro_segmentos = Sheets("Segmentos").Range("A1").End(xlDown).Row
+    For s = 1 To nro_segmentos
+        tipo_segmento = Sheets("Segmentos").Cells(s, 1).Value
+        Sheets.Add(, Sheets(Sheets.Count)).Name = tipo_segmento
+        Sheets("Data").Range("A1", "R1").Copy
+        Sheets(tipo_segmento).Range("A1").PasteSpecial xlPasteAll
+        f = 2
+        For i = 2 To nro_Filas
+            segmento_fila = Sheets("Data").Cells(i, "R").Value
+            If tipo_segmento = segmento_fila Then
+                For c = 1 To 18
+                    Sheets(tipo_segmento).Cells(f, c).Value = Sheets("Data").Cells(i, c).Value
+                Next c
+                f = f + 1
+            End If
+        Next i
+    Next s
+    
+    Sheets("Segmentos").Delete
+    
+End Sub
+
+
+
+
+Sub Data_Créditos_f()
+    
+    Application.ScreenUpdating = False
+    
+    ruta = "D:\Edúcate Perú\Programación en Excel Jul 2023\Excel\Sesión 12\"
+    nro_Filas = Sheets("Data").Range("A1").End(xlDown).Row
+    Sheets("Data").Range("R2", "R" & nro_Filas).Copy
+    Sheets.Add(, Sheets(Sheets.Count)).Name = "Segmentos"
+    ActiveSheet.Paste
+    ActiveSheet.Range("$A$1:$A$" & nro_Filas - 1).RemoveDuplicates Columns:=1, Header:=xlNo
+        
+    nro_segmentos = Sheets("Segmentos").Range("A1").End(xlDown).Row
+    For s = 1 To nro_segmentos
+        tipo_segmento = Sheets("Segmentos").Cells(s, 1).Value
+        Sheets.Add(, Sheets(Sheets.Count)).Name = tipo_segmento
+        Sheets("Data").Range("A1", "R1").Copy
+        Sheets(tipo_segmento).Range("A1").PasteSpecial xlPasteAll
+        f = 2
+        For i = 2 To nro_Filas
+            segmento_fila = Sheets("Data").Cells(i, "R").Value
+            If tipo_segmento = segmento_fila Then
+                For c = 1 To 18
+                    Sheets(tipo_segmento).Cells(f, c).Value = Sheets("Data").Cells(i, c).Value
+                Next c
+                f = f + 1
+            End If
+        Next i
+        Sheets(tipo_segmento).Move
+        ActiveWorkbook.SaveAs ruta & tipo_segmento & ".xlsx"
+        ActiveWorkbook.Close
+    Next s
+    
+    Application.DisplayAlerts = False
+    Sheets("Segmentos").Delete
+    Application.DisplayAlerts = True
+    
+    Application.ScreenUpdating = True
+    
+End Sub
+
+Sub tasas_mensuales()
+        
+    Dim archivo_tasas As Workbook
+    Dim archivo_año As Workbook
+    
+    Application.ScreenUpdating = False
+    
+    'i.  Abrir el archivo "Tasas.xlsx".
+    ruta = "D:\Edúcate Perú\Programación en Excel Jul 2023\Excel\Prácticas\04\Tasas\"
+    Workbooks.Open ruta & "Tasas" & ".xlsx"
+    Set archivo_tasas = ActiveWorkbook
+    
+    'ii. Trasladar la tasa activa en moneda nacional y moneda extranjera, del último día de cada mes, desde los archivos 2001 a 2006, hacia los cuadros del archivo "Tasas.xlsx".
+    For a = 1 To 6
+        Workbooks.Open ruta & "200" & a & ".xls"
+        Set archivo_año = ActiveWorkbook
+        For m = 1 To 12
+            tamn = archivo_año.Sheets(m).Range("B7").End(xlDown).Value
+            tamex = archivo_año.Sheets(m).Range("E7").End(xlDown).Value
+            archivo_tasas.Sheets("TAMN").Cells(m + 1, a + 1).Value = tamn
+            archivo_tasas.Sheets("TAMEX").Cells(m + 1, a + 1).Value = tamex
+        Next m
+        archivo_año.Close
+    Next a
+    
+    'iii.    Guardar el archivo "Tasas.xlsx" en la misma ubicación, pero con el nombre "Tasas_completado.xlsx".
+    archivo_tasas.SaveAs ruta & "Tasas_completado" & ".xlsx"
+    
+    'iv. Cerrar el archivo "Tasas_completado.xlsx".
+    archivo_tasas.Close
+    
+    Application.ScreenUpdating = True
+    
+End Sub
+
+Sub tasas_mensuales2()
+        
+    Dim archivo_tasas As Workbook
+    Dim archivo_año As Workbook
+    
+    Application.ScreenUpdating = False
+    
+    'i.  Abrir el archivo "Tasas.xlsx".
+    ruta = "D:\Edúcate Perú\Programación en Excel Jul 2023\Excel\Prácticas\04\Tasas\"
+    Workbooks.Open ruta & "Tasas" & ".xlsx"
+    Set archivo_tasas = ActiveWorkbook
+    
+    'ii. Trasladar la tasa activa en moneda nacional y moneda extranjera, del último día de cada mes, desde los archivos 2001 a 2006, hacia los cuadros del archivo "Tasas.xlsx".
+    For a = 1 To 6
+        Workbooks.Open ruta & "200" & a & ".xls"
+        Set archivo_año = ActiveWorkbook
+        For m = 1 To 12
+            tamn = archivo_año.Sheets(m).Range("B7").End(xlDown).Row
+            archivo_año.Sheets(m).Range("J9").FormulaR1C1 = "=+AVERAGE(R9C2:R" & tamn & "C2)"
+            prom_tamn = archivo_año.Sheets(m).Range("J9").Value
+            
+            tamex = archivo_año.Sheets(m).Range("E7").End(xlDown).Row
+            archivo_año.Sheets(m).Range("K9").FormulaR1C1 = "=+AVERAGE(R9C5:R" & tamn & "C5)"
+            prom_tamex = archivo_año.Sheets(m).Range("K9").Value
+            
+            archivo_tasas.Sheets("TAMN").Cells(m + 1, a + 1).Value = prom_tamn
+            archivo_tasas.Sheets("TAMEX").Cells(m + 1, a + 1).Value = prom_tamex
+        Next m
+        archivo_año.Close False
+    Next a
+    
+    'iii.    Guardar el archivo "Tasas.xlsx" en la misma ubicación, pero con el nombre "Tasas_completado.xlsx".
+    archivo_tasas.SaveAs ruta & "Tasas_completado_prom" & ".xlsx"
+    
+    'iv. Cerrar el archivo "Tasas_completado.xlsx".
+    archivo_tasas.Close
+    
+    Application.ScreenUpdating = True
+    
+End Sub
+
+
+
+
+
+
+
+
+
+
+
+
+
+
