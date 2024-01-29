@@ -1,0 +1,7 @@
+En el archivo “Tasas.xlsx”
+a. Guarde los archivos 2001 a 2006 en su escritorio.
+b. Elabore una macro que se llame tasas_mensuales, dicha macro debe realizar lo siguiente
+i. Abrir el archivo “Tasas.xlsx”.
+ii. Trasladar la tasa activa en moneda nacional y moneda extranjera, del último día de cada mes, desde los archivos 2001 a 2006, hacia los cuadros del archivo “Tasas.xlsx”.
+iii. Guardar el archivo “Tasas.xlsx” en la misma ubicación, pero con el nombre “Tasas_completado.xlsx”.
+iv. Cerrar el archivo “Tasas_completado.xlsx”.
